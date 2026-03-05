@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 18ae3119b4c1da946b10f6c2499e855b, type: 3}
+  m_Name: Default
+  m_EditorClassIdentifier: 
+  movementSpeed: 10
+  jumpPower: 12
+  jumps: 1
+  dashForce: 15
+  dashTime: 0.5
+  dashCooldown: 1.5
+  dashes: 1
+  coyoteTime: 0.2
+  jumpMult: 0.7
+  defaultGravity: 2.5
+  gravityFallMult: 2
+  wallSlideVelocity: 3
+  wallJumpVelocity: 10
+  wallJumpTime: 0.3
+  wallJumpAngle: {x: 1, y: 2}
+  startOffset: {x: 0, y: 0}
+  stopOffset: {x: 0, y: 0}

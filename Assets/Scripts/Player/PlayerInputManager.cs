@@ -5,7 +5,15 @@ public class PlayerInputManager : MonoBehaviour
 {
     public Vector2 moveInputRaw { get; private set; }
     public bool jumpInput { get; private set; }
+    public bool jumpInputStop { get; private set; }
+    private float inputHoldTime = 0.2f;
+    private float jumpInputStartTime;
     public bool attackInput { get; private set; }
+
+    private void Update()
+    {
+        CheckJumpInputHoldTime();
+    }
 
     public void OnMoveInput(InputAction.CallbackContext context)
     {
@@ -17,18 +25,24 @@ public class PlayerInputManager : MonoBehaviour
         if (context.started)
         {
             jumpInput = true;
+            jumpInputStop = false;
+            jumpInputStartTime = Time.time;
         }
 
-        if (context.performed)
-        {
-            
-        }
-        
         if (context.canceled)
         {
-            
+            jumpInputStop = true;
         }
     }
+    private void CheckJumpInputHoldTime()
+    {
+        if (Time.time >= jumpInputStartTime + inputHoldTime)
+        {
+            jumpInput = false;
+        }
+    }
+
+    public void UseJumpInput() { jumpInput = false; }
 
     public void OnAttackInput(InputAction.CallbackContext context)
     {
@@ -41,5 +55,10 @@ public class PlayerInputManager : MonoBehaviour
         {
             attackInput = false;
         }
+    }
+
+    public void UseAttackInput()
+    {
+        attackInput = false;
     }
 }

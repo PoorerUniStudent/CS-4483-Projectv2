@@ -96,7 +96,13 @@
         {
             "name": "K&M",
             "bindingGroup": "K&M",
-            "devices": []
+            "devices": [
+                {
+                    "devicePath": "<Keyboard>",
+                    "isOptional": false,
+                    "isOR": false
+                }
+            ]
         }
     ]
 }
