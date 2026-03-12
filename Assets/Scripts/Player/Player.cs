@@ -1,3 +1,6 @@
+using System.Collections.Generic;
+using NUnit.Framework;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class Player : MonoBehaviour
@@ -20,11 +23,14 @@ public class Player : MonoBehaviour
     public CharacterData CharData { get => characterData; private set => characterData = value; }
     private bool dead;
 
+    public List<GameObject> touchList { get; private set; }
+
     void Awake()
     {
         dead = false;
         core = GetComponentInChildren<Core>();
         anim = GetComponent<Animator>();
+        touchList = new List<GameObject>();
 
         stateMachine = new PlayerFiniteStateMachine();
         playerIdleState = new PlayerIdle(this, stateMachine, CharData, "idle");
@@ -32,14 +38,14 @@ public class Player : MonoBehaviour
         playerJumpingState = new PlayerJump(this, stateMachine, CharData, "jump");
         playerLandingState = new PlayerLanding(this, stateMachine, CharData, "landed");
         playerInAirState = new PlayerInAir(this, stateMachine, CharData, "inAir");
-
-        stateMachine.ChangeState(playerIdleState);
     }
 
     void Start()
     {
         core.Movement.SetPlayerGravity(CharData.defaultGravity);
         playerInput = GetComponent<PlayerInputManager>();
+
+        stateMachine.ChangeState(playerIdleState);
     }
 
     // Update is called once per frame
@@ -67,5 +73,21 @@ public class Player : MonoBehaviour
     {
         Debug.Log("PLayer ded");
         dead = true;
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (!touchList.Contains(collision.gameObject))
+        {
+            touchList.Add(collision.gameObject);
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (touchList.Contains(collision.gameObject))
+        {
+            touchList.Remove(collision.gameObject);
+        }
     }
 }

@@ -16,6 +16,8 @@ public class PlayerState
 
     protected Vector2 mouseWorldPos;
 
+    protected bool InteractInput;
+
     private string animBoolName;
 
     public PlayerState(Player player, PlayerFiniteStateMachine stateMachine, CharacterData charData, string animBoolName)
@@ -48,6 +50,21 @@ public class PlayerState
     {
         DoChecks();
         mouseWorldPos = Camera.main.ScreenToWorldPoint(Mouse.current.position.ReadValue());
+
+        InteractInput = player.playerInput.interactInput;
+
+        if (InteractInput)
+        {
+            foreach (GameObject obj in player.touchList)
+            {
+                Interactable interactable = obj.GetComponent<Interactable>();
+                if (interactable)
+                {
+                    player.playerInput.UseInteractInput();
+                    interactable.Interact();
+                }
+            }
+        }
     } // Updates every Update()
 
     public virtual void DoChecks() { } // Ground check, ledge check etc.

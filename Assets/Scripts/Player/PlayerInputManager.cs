@@ -9,6 +9,7 @@ public class PlayerInputManager : MonoBehaviour
     private float inputHoldTime = 0.2f;
     private float jumpInputStartTime;
     public bool attackInput { get; private set; }
+    public bool interactInput { get; private set; }
 
     private void Update()
     {
@@ -60,5 +61,23 @@ public class PlayerInputManager : MonoBehaviour
     public void UseAttackInput()
     {
         attackInput = false;
+    }
+
+    public void OnInteractInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            interactInput = true;
+        }
+
+        if (context.canceled)
+        {
+            interactInput = false;
+        }
+    }
+
+    public void UseInteractInput()
+    {
+        interactInput = false;
     }
 }
