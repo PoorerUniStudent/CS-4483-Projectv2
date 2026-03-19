@@ -36,8 +36,10 @@ public class PlayerGrounded : PlayerState
         JumpInput = player.playerInput.jumpInput;
         AttackInput = player.playerInput.attackInput;
         isGrounded = core.CollisionSenses.Ground;
-
-        if (JumpInput && player.playerJumpingState.CanJump())
+        if (AttackInput)
+        {
+            stateMachine.ChangeState(player.playerAttackState);
+        } else if (JumpInput && player.playerJumpingState.CanJump())
         {
             stateMachine.ChangeState(player.playerJumpingState);
         }
