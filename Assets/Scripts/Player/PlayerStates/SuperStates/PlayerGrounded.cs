@@ -36,10 +36,27 @@ public class PlayerGrounded : PlayerState
         JumpInput = player.playerInput.jumpInput;
         AttackInput = player.playerInput.attackInput;
         isGrounded = core.CollisionSenses.Ground;
-        if (AttackInput)
+        
+        if (AttackInput && player.playerAttackState.CheckIfCanAttack())
         {
+            Transform target = core.CollisionSenses.FindNearestEnemy();
+            if (target == null)
+            {
+                CheckNonAttackStates();
+                return;
+            }
+
+            player.playerAttackState.SetTarget(target);
             stateMachine.ChangeState(player.playerAttackState);
-        } else if (JumpInput && player.playerJumpingState.CanJump())
+        } else
+        {
+            CheckNonAttackStates();
+        }
+    }
+
+    public override void CheckNonAttackStates()
+    {
+        if (JumpInput && player.playerJumpingState.CanJump())
         {
             stateMachine.ChangeState(player.playerJumpingState);
         }

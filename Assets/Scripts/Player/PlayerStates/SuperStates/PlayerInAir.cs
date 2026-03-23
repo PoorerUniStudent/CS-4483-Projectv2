@@ -80,6 +80,25 @@ public class PlayerInAir : PlayerState
         CheckJumpMultiplier();
         CheckGravity();
 
+        if (AttackInput && player.playerAttackState.CheckIfCanAttack())
+        {
+            Transform target = core.CollisionSenses.FindNearestEnemy();
+            if (target == null)
+            {
+                CheckNonAttackStates();
+                return;
+            }
+
+            player.playerAttackState.SetTarget(target);
+            stateMachine.ChangeState(player.playerAttackState);
+        } else
+        {
+            CheckNonAttackStates();
+        }
+    }
+
+    public override void CheckNonAttackStates()
+    {
         if (isGrounded && core.Movement.velocity.y < 0.01f)
         {
             stateMachine.ChangeState(player.playerLandingState);
@@ -89,7 +108,7 @@ public class PlayerInAir : PlayerState
         {
             stateMachine.ChangeState(player.playerLedgeClimbState);
         }
-        
+
         else if (JumpInput && (isTouchingWall || isTouchingWallBack || wallJumpCoyoteTime))
         {
             StopWallJumpCoyoteTime();
@@ -111,7 +130,7 @@ public class PlayerInAir : PlayerState
         */
         else if (((isTouchingWall && InputX == core.Movement.facingDir) || (isTouchingWallBack && InputX != core.Movement.facingDir)) && core.Movement.velocity.y <= 0f)
         {
-           // stateMachine.ChangeState(player.playerWallSlideState);
+            // stateMachine.ChangeState(player.playerWallSlideState);
         }
         else
         {

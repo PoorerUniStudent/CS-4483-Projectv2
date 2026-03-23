@@ -72,4 +72,6 @@ public class PlayerState
     public virtual void AnimationTrigger() { } // Triggered in anim
 
     public virtual void AnimationFinishTrigger() => isAnimationFinished = true; // Triggered in anim
+
+    public virtual void CheckNonAttackStates() { }
 }
