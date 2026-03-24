@@ -6,6 +6,7 @@ public class PlayerInAir : PlayerState
     private bool JumpInput;
     private bool JumpInputStop;
     private bool AttackInput;
+    private bool PullInput;
     private bool DashInput;
 
     private bool isGrounded;
@@ -76,13 +77,14 @@ public class PlayerInAir : PlayerState
         JumpInput = player.playerInput.jumpInput;
         JumpInputStop = player.playerInput.jumpInputStop;
         AttackInput = player.playerInput.attackInput;
+        PullInput = player.playerInput.pullInput;
 
         CheckJumpMultiplier();
         CheckGravity();
 
         if (AttackInput && player.playerAttackState.CheckIfCanAttack())
         {
-            Transform target = core.CollisionSenses.FindNearestEnemy();
+            Transform target = core.CollisionSenses.FindNearestEnemy(false);
             if (target == null)
             {
                 CheckNonAttackStates();
@@ -91,7 +93,20 @@ public class PlayerInAir : PlayerState
 
             player.playerAttackState.SetTarget(target);
             stateMachine.ChangeState(player.playerAttackState);
-        } else
+        }
+        else if (PullInput && player.playerPullState.CheckIfCanPull())
+        {
+            Transform target = core.CollisionSenses.FindNearestEnemy(true);
+            if (target == null)
+            {
+                CheckNonAttackStates();
+                return;
+            }
+
+            player.playerPullState.SetTarget(target);
+            stateMachine.ChangeState(player.playerPullState);
+        }
+        else
         {
             CheckNonAttackStates();
         }

@@ -63,13 +63,14 @@ public class Movement : CoreComponent
         SetFinalVelocity();
     }
 
-    public void SetDashVelocity(float v, Vector2 angle)
+    public void FreezePosition()
     {
-        SetVelocityZero();
+        rb.constraints = RigidbodyConstraints2D.FreezePosition;
+    }
 
-        angle.Normalize();
-        workspace.Set(angle.x * v, 0f);
-        SetFinalVelocity();
+    public void UnfreezePosition()
+    {
+        rb.constraints = ~RigidbodyConstraints2D.FreezePosition;
     }
 
     private void SetFinalVelocity()

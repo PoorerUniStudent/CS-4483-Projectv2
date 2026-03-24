@@ -14,23 +14,24 @@ public class PlayerAttack : PlayerAbility
 
 	public PlayerAttack(Player player, PlayerFiniteStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
-		
+		canAttack = true;
     }
 
 	public override void Enter()
 	{
 		base.Enter();
+        
+        whatIsEnemy = core.CollisionSenses.WhatIsEnemy;
 		
-		whatIsEnemy = core.CollisionSenses.WhatIsEnemy;
-		
-		if (target == null)
+		if (target == null || !canAttack)
 		{
 			isAbilityDone = true;
 			return;
 		}
-		
-		// Pause all actins the enemy is doing target.FreezeActions();
-		int direction = 1;
+
+        canAttack = false;
+        // Pause all actins the enemy is doing target.FreezeActions();
+        int direction = 1;
 		Vector2 distanceFromTarget = target.position - player.transform.position;
 		
 		if (distanceFromTarget.x < 0)
@@ -40,7 +41,6 @@ public class PlayerAttack : PlayerAbility
 
 		core.Movement.CheckIfShouldFlip(direction);
 		core.Movement.SetVelocity(charData.dashForce, distanceFromTarget);
-		canAttack = false;
 	}
 
 	public override void Exit()
@@ -63,6 +63,7 @@ public class PlayerAttack : PlayerAbility
 		if (enemy != null && enemy.transform == target)
 		{
 			isAbilityDone = true;
+			// Unfreeze enemy
 		}
 	}
 
@@ -73,6 +74,6 @@ public class PlayerAttack : PlayerAbility
 
 	public bool CheckIfCanAttack()
 	{
-		return timeSinceLastAttack + attackCooldown <= Time.time;
+		return canAttack && timeSinceLastAttack + attackCooldown <= Time.time;
 	}
 }

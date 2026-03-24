@@ -16,8 +16,8 @@ public class Player : MonoBehaviour
     public PlayerJump playerJumpingState { get; private set; }
     public PlayerLanding playerLandingState { get; private set; }
     public PlayerInAir playerInAirState { get; private set; }
-
     public PlayerAttack playerAttackState { get; private set; }
+    public PlayerPull playerPullState { get; private set; }
     #endregion
 
     [SerializeField]
@@ -41,6 +41,7 @@ public class Player : MonoBehaviour
         playerLandingState = new PlayerLanding(this, stateMachine, CharData, "landed");
         playerInAirState = new PlayerInAir(this, stateMachine, CharData, "inAir");
         playerAttackState = new PlayerAttack(this, stateMachine, CharData, "attack");
+        playerPullState = new PlayerPull(this, stateMachine, CharData, "pull");
     }
 
     void Start()

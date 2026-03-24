@@ -431,6 +431,22 @@ MonoBehaviour:
         m_CallState: 2
     m_ActionId: 08f1c6c1-2d5b-4bb0-8fab-bbdd2d8d4f99
     m_ActionName: 'Movement/Interact[/Keyboard/e]'
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 225449739}
+        m_TargetAssemblyTypeName: PlayerInputManager, Assembly-CSharp
+        m_MethodName: OnPullInput
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: ffa9b1a5-99d0-40df-bbc9-62b008fa20b6
+    m_ActionName: 'Movement/Pull[/Keyboard/shift]'
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Movement
@@ -595,7 +611,7 @@ Rigidbody2D:
   m_Interpolate: 0
   m_SleepingMode: 1
   m_CollisionDetection: 0
-  m_Constraints: 7
+  m_Constraints: 4
 --- !u!61 &1090013808
 BoxCollider2D:
   m_ObjectHideFlags: 0
@@ -828,7 +844,8 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   enemyCheck: {fileID: 1139602527}
-  enemyCheckRadius: 2.55
+  enemyCheckRadius: 1.5
+  pullCheckRadius: 2.6
   whatIsEnemy:
     serializedVersion: 2
     m_Bits: 128
@@ -1087,8 +1104,8 @@ Transform:
   m_GameObject: {fileID: 2114591310}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: -0.27, y: -5.32, z: 0}
-  m_LocalScale: {x: 4.75756, y: 8.3618, z: 1}
+  m_LocalPosition: {x: 0.0293, y: -5.26, z: 0}
+  m_LocalScale: {x: 25.786743, y: 8.3618, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

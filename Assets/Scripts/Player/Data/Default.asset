@@ -15,7 +15,7 @@ MonoBehaviour:
   movementSpeed: 10
   jumpPower: 12
   jumps: 1
-  dashForce: 15
+  dashForce: 30
   dashTime: 0.5
   dashCooldown: 1.5
   dashes: 1

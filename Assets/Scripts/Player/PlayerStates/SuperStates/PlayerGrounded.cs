@@ -5,6 +5,7 @@ public class PlayerGrounded : PlayerState
     protected float InputX;
     protected bool JumpInput;
     protected bool AttackInput;
+    protected bool PullInput;
     private bool DashInput;
 
     private bool isGrounded;
@@ -35,11 +36,12 @@ public class PlayerGrounded : PlayerState
         InputX = player.playerInput.moveInputRaw.x;
         JumpInput = player.playerInput.jumpInput;
         AttackInput = player.playerInput.attackInput;
+        PullInput = player.playerInput.pullInput;
         isGrounded = core.CollisionSenses.Ground;
         
         if (AttackInput && player.playerAttackState.CheckIfCanAttack())
         {
-            Transform target = core.CollisionSenses.FindNearestEnemy();
+            Transform target = core.CollisionSenses.FindNearestEnemy(false);
             if (target == null)
             {
                 CheckNonAttackStates();
@@ -48,7 +50,20 @@ public class PlayerGrounded : PlayerState
 
             player.playerAttackState.SetTarget(target);
             stateMachine.ChangeState(player.playerAttackState);
-        } else
+        }
+        else if (PullInput && player.playerPullState.CheckIfCanPull())
+        {
+            Transform target = core.CollisionSenses.FindNearestEnemy(true);
+            if (target == null)
+            {
+                CheckNonAttackStates();
+                return;
+            }
+
+            player.playerPullState.SetTarget(target);
+            stateMachine.ChangeState(player.playerPullState);
+        }
+        else
         {
             CheckNonAttackStates();
         }

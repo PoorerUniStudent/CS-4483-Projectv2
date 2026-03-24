@@ -12,6 +12,7 @@ public class CollisionSense : CoreComponent
     public Transform LedgeCheck { get => ledgeCheck; private set => ledgeCheck = value; }
 
     public LayerMask WhatIsEnemy { get => whatIsEnemy; private set => whatIsEnemy = value; }
+    public float PullCheckRadius { get => pullCheckRadius; private set => pullCheckRadius = value; }
 
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius;
@@ -19,6 +20,7 @@ public class CollisionSense : CoreComponent
 
     [SerializeField] private Transform enemyCheck;
     [SerializeField] private float enemyCheckRadius;
+    [SerializeField] private float pullCheckRadius;
     [SerializeField] private LayerMask whatIsEnemy;
 
     [SerializeField] private Transform wallCheck;
@@ -43,9 +45,16 @@ public class CollisionSense : CoreComponent
         return Physics2D.Raycast(wallCheck.position, Vector2.right * -core.Movement.facingDir, wallCheckDistance, whatIsWall);
     }
 
-    public Transform FindNearestEnemy()
+    public Transform FindNearestEnemy(bool usePullRange)
     {
-        Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(enemyCheck.position, enemyCheckRadius, whatIsEnemy);
+        float radius = enemyCheckRadius;
+
+        if (usePullRange)
+        {
+            radius = pullCheckRadius;
+        }
+
+        Collider2D[] nearbyEnemies = Physics2D.OverlapCircleAll(enemyCheck.position, radius, whatIsEnemy);
         float closestDistance = 999f;
         Transform closestEnemy = null;
 
@@ -67,7 +76,7 @@ public class CollisionSense : CoreComponent
             return;
         }
 
-        Gizmos.DrawWireSphere(enemyCheck.position, enemyCheckRadius);
+        Gizmos.DrawWireSphere(enemyCheck.position, pullCheckRadius);
         Gizmos.DrawWireCube(GroundCheck.position, new Vector2(groundCheckRadius, groundCheckRadius));
         Debug.DrawRay(wallCheck.position, Vector2.right * core.Movement.facingDir * wallCheckDistance, Color.red);
         Debug.DrawRay(wallCheck.position, Vector2.right * -core.Movement.facingDir * wallCheckDistance, Color.red);
