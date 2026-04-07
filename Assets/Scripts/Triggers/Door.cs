@@ -3,10 +3,14 @@ using UnityEngine.SceneManagement;
 
 public class Door : Interactable
 {
+    [SerializeField] private string scene;
     public override void Interact()
     {
         base.Interact();
 
-        // Load Scene
+        if (scene != null && !scene.Equals(""))
+        {
+            SceneManager.LoadScene(scene);
+        }
     }
 }

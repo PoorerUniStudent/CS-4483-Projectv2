@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Death : MonoBehaviour
 {
@@ -9,7 +10,7 @@ public class Death : MonoBehaviour
     {
         if (collision.tag == "Player")
         {
-            collision.gameObject.transform.position = respawnPoint;
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
     }
 }
