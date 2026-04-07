@@ -13,6 +13,8 @@ public class CollisionSense : CoreComponent
 
     public LayerMask WhatIsEnemy { get => whatIsEnemy; private set => whatIsEnemy = value; }
     public float PullCheckRadius { get => pullCheckRadius; private set => pullCheckRadius = value; }
+    public Transform PlatformCheck { get => platformCheck; private set => platformCheck = value; }
+    public LayerMask WhatIsPlatform { get => whatIsPlatform; private set => whatIsPlatform = value; }
 
     [SerializeField] private Transform groundCheck;
     [SerializeField] private float groundCheckRadius;
@@ -29,6 +31,10 @@ public class CollisionSense : CoreComponent
 
     [SerializeField] private Transform ledgeCheck;
 
+    [SerializeField] private Transform platformCheck;
+    [SerializeField] private float platformCheckDistance;
+    [SerializeField] private LayerMask whatIsPlatform;
+
     public bool Ground
     {
         get => Physics2D.OverlapBox(GroundCheck.position, new Vector2(groundCheckRadius, groundCheckRadius), 0f, whatIsGround);
@@ -43,6 +49,11 @@ public class CollisionSense : CoreComponent
     public bool WallBack()
     {
         return Physics2D.Raycast(wallCheck.position, Vector2.right * -core.Movement.facingDir, wallCheckDistance, whatIsWall);
+    }
+
+    public Collider2D Platform
+    {
+        get => Physics2D.OverlapBox(PlatformCheck.position, new Vector2(platformCheckDistance, platformCheckDistance), 0f, whatIsPlatform);
     }
 
     public Transform FindNearestEnemy(bool usePullRange)
@@ -78,6 +89,7 @@ public class CollisionSense : CoreComponent
 
         Gizmos.DrawWireSphere(enemyCheck.position, pullCheckRadius);
         Gizmos.DrawWireCube(GroundCheck.position, new Vector2(groundCheckRadius, groundCheckRadius));
+        Gizmos.DrawWireCube(PlatformCheck.position, new Vector2(platformCheckDistance, platformCheckDistance));
         Debug.DrawRay(wallCheck.position, Vector2.right * core.Movement.facingDir * wallCheckDistance, Color.red);
         Debug.DrawRay(wallCheck.position, Vector2.right * -core.Movement.facingDir * wallCheckDistance, Color.red);
     }

@@ -14,15 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementSpeed: 10
   jumpPower: 12
-  jumps: 1
-  dashForce: 30
-  dashTime: 0.5
-  dashCooldown: 1.5
-  dashes: 1
+  jumps: 2
   coyoteTime: 0.2
   jumpMult: 0.7
   defaultGravity: 2.5
   gravityFallMult: 2
+  dashForce: 30
+  pullForce: 20
   wallSlideVelocity: 3
   wallJumpVelocity: 10
   wallJumpTime: 0.3

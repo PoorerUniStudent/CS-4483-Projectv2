@@ -49,6 +49,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": false
+                },
+                {
+                    "name": "Drop",
+                    "type": "Button",
+                    "id": "ee5e16db-600a-452d-9a9f-d3ce63449d9b",
+                    "expectedControlType": "",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -126,6 +135,17 @@
                     "processors": "",
                     "groups": ";K&M",
                     "action": "Pull",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "204a1a5c-fd7f-4047-a642-6d8fe4a38000",
+                    "path": "<Keyboard>/s",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": ";K&M",
+                    "action": "Drop",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

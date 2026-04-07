@@ -1,3 +1,4 @@
+using System.Collections;
 using System.Collections.Generic;
 using NUnit.Framework;
 using Unity.VisualScripting;
@@ -8,6 +9,7 @@ public class Player : MonoBehaviour
     public PlayerInputManager playerInput { get; private set; }
     public Core core { get; private set; }
     public Animator anim { get; private set; }
+    public Collider2D col { get; private set; }
     public PlayerFiniteStateMachine stateMachine { get; private set; }
 
     #region States
@@ -18,6 +20,9 @@ public class Player : MonoBehaviour
     public PlayerInAir playerInAirState { get; private set; }
     public PlayerAttack playerAttackState { get; private set; }
     public PlayerPull playerPullState { get; private set; }
+    public PlayerWallJumpState playerWallJumpState { get; private set; }
+    public PlayerLedgeClimbState playerLedgeClimbState { get; private set; }
+    public PlayerWallSlideState playerWallSlideState { get; private set; }
     #endregion
 
     [SerializeField]
@@ -27,11 +32,15 @@ public class Player : MonoBehaviour
 
     public List<GameObject> touchList { get; private set; }
 
+    private bool DropInput;
+    private Collider2D currentPlatform;
+
     void Awake()
     {
         dead = false;
         core = GetComponentInChildren<Core>();
         anim = GetComponent<Animator>();
+        col = GetComponent<Collider2D>();
         touchList = new List<GameObject>();
 
         stateMachine = new PlayerFiniteStateMachine();
@@ -42,6 +51,9 @@ public class Player : MonoBehaviour
         playerInAirState = new PlayerInAir(this, stateMachine, CharData, "inAir");
         playerAttackState = new PlayerAttack(this, stateMachine, CharData, "attack");
         playerPullState = new PlayerPull(this, stateMachine, CharData, "pull");
+        playerWallJumpState = new PlayerWallJumpState(this, stateMachine, CharData, "inAir");
+        playerLedgeClimbState = new PlayerLedgeClimbState(this, stateMachine, CharData, "ledgeClimb");
+        playerWallSlideState = new PlayerWallSlideState(this, stateMachine, CharData, "wallSlide");
     }
 
     void Start()
@@ -62,6 +74,14 @@ public class Player : MonoBehaviour
 
         core.LogicUpdate();
         stateMachine.currentState.LogicUpdate();
+
+        DropInput = playerInput.dropInput;
+        currentPlatform = core.CollisionSenses.Platform;
+        Debug.Log(currentPlatform);
+        if (DropInput && currentPlatform)
+        {
+            StartCoroutine(DisableCollision());
+        }
     }
 
     public PlayerState GetCurrentState()
@@ -93,5 +113,24 @@ public class Player : MonoBehaviour
         {
             touchList.Remove(collision.gameObject);
         }
+    }
+
+    private IEnumerator DisableCollision()
+    {
+        Collider2D platformCollider = currentPlatform.GetComponent<Collider2D>();
+
+        if (platformCollider == null)
+        {
+            yield return null;
+        }
+
+        // Ignore collision between player and this specific platform
+        Physics2D.IgnoreCollision(col, platformCollider, true);
+
+        // Wait for a short duration
+        yield return new WaitForSeconds(0.5f);
+
+        // Re-enable collision
+        Physics2D.IgnoreCollision(col, platformCollider, false);
     }
 }

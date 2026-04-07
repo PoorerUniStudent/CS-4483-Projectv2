@@ -1,24 +1,14 @@
 using UnityEngine;
 
-public class PlayerGrounded : PlayerState
+public class PlayerWallJumpState : PlayerAbility
 {
-    protected float InputX;
-    protected bool JumpInput;
-    protected bool AttackInput;
-    protected bool PullInput;
-    private bool DashInput;
+    private int wallJumpDirection;
 
-    private bool isGrounded;
-    public PlayerGrounded(Player player, PlayerFiniteStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
+    private bool AttackInput;
+    private bool PullInput;
+
+    public PlayerWallJumpState(Player player, PlayerFiniteStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
-    }
-
-    public override void DoChecks()
-    {
-        base.DoChecks();
-
-        // Check if grounded
-        isGrounded = core.CollisionSenses.Ground;
     }
 
     public override void Enter()
@@ -26,19 +16,23 @@ public class PlayerGrounded : PlayerState
         base.Enter();
 
         player.playerJumpingState.ResetJumps();
-        core.Movement.SetPlayerGravity(charData.defaultGravity);
+        player.core.Movement.SetVelocity(charData.jumpPower + charData.movementSpeed / 2,
+            charData.wallJumpAngle, wallJumpDirection);
+        player.core.Movement.CheckIfShouldFlip(wallJumpDirection);
+        player.playerJumpingState.DecreaseAmountOfJumpsLeft();
     }
 
     public override void LogicUpdate()
     {
         base.LogicUpdate();
 
-        InputX = player.playerInput.moveInputRaw.x;
-        JumpInput = player.playerInput.jumpInput;
+        if (isExitingState)
+        {
+            return;
+        }
+
         AttackInput = player.playerInput.attackInput;
         PullInput = player.playerInput.pullInput;
-
-        isGrounded = core.CollisionSenses.Ground;
 
         if (AttackInput && player.playerAttackState.CheckIfCanAttack())
         {
@@ -64,22 +58,24 @@ public class PlayerGrounded : PlayerState
             player.playerPullState.SetTarget(target);
             stateMachine.ChangeState(player.playerPullState);
         }
-        else
+
+        player.anim.SetFloat("yVelocity", core.Movement.velocity.y);
+
+        if (Time.time >= startTime + charData.wallJumpTime)
         {
-            CheckNonAttackStates();
+            isAbilityDone = true;
         }
     }
 
-    public override void CheckNonAttackStates()
+    public void DetermineWallJumpDirection(bool isTouchingWall)
     {
-        if (JumpInput && player.playerJumpingState.CanJump())
+        if (isTouchingWall)
         {
-            stateMachine.ChangeState(player.playerJumpingState);
+            wallJumpDirection = -player.core.Movement.facingDir;
         }
-        else if (!isGrounded)
+        else
         {
-            player.playerInAirState.StartCoyoteTime();
-            stateMachine.ChangeState(player.playerInAirState);
+            wallJumpDirection = player.core.Movement.facingDir;
         }
     }
 }

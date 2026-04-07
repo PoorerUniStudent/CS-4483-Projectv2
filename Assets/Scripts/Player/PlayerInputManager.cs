@@ -11,6 +11,7 @@ public class PlayerInputManager : MonoBehaviour
     public bool attackInput { get; private set; }
     public bool interactInput { get; private set; }
     public bool pullInput { get; private set; }
+    public bool dropInput {  get; private set; }
     private void Update()
     {
         CheckJumpInputHoldTime();
@@ -97,5 +98,18 @@ public class PlayerInputManager : MonoBehaviour
     public void UsePullInput()
     {
         pullInput = false;
+    }
+
+    public void OnDropInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            dropInput = true;
+        }
+
+        if (context.canceled)
+        {
+            dropInput = false;
+        }
     }
 }
