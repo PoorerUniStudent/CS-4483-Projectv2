@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
 {
@@ -103,8 +104,12 @@ public class Player : MonoBehaviour
         dead = true;
         GetComponent<SpriteRenderer>().color = Color.red;
         core.Movement.FreezePosition();
+
         lineRenderer.enabled = false;
         slashLineupLine.enabled = false;
+
+        // Auto load scene for now when you die
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
     }
 
     // For interactables
