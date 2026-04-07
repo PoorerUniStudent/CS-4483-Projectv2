@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     private Collider2D currentPlatform;
 
     public LineRenderer lineRenderer { get; private set; }
+    public LineRenderer slashLineupLine;
 
     void Awake()
     {
@@ -102,7 +103,8 @@ public class Player : MonoBehaviour
         dead = true;
         GetComponent<SpriteRenderer>().color = Color.red;
         core.Movement.FreezePosition();
-
+        lineRenderer.enabled = false;
+        slashLineupLine.enabled = false;
     }
 
     // For interactables

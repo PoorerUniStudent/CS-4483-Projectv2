@@ -81,9 +81,22 @@ public class PlayerInAir : PlayerState
         CheckJumpMultiplier();
         CheckGravity();
 
+        Transform target = core.CollisionSenses.FindNearestEnemy(false);
+
+        if (target != null && !target.GetComponent<Enemy>().dead)
+        {
+            player.slashLineupLine.SetPosition(0, player.transform.position);
+            player.slashLineupLine.SetPosition(1, target.position);
+
+            player.slashLineupLine.enabled = true;
+        }
+        else
+        {
+            player.slashLineupLine.enabled = false;
+        }
+
         if (AttackInput && player.playerAttackState.CheckIfCanAttack())
         {
-            Transform target = core.CollisionSenses.FindNearestEnemy(false);
             if (target == null || target.GetComponent<Enemy>().dead)
             {
                 CheckNonAttackStates();
@@ -95,7 +108,6 @@ public class PlayerInAir : PlayerState
         }
         else if (PullInput && player.playerPullState.CheckIfCanPull())
         {
-            Transform target = core.CollisionSenses.FindNearestEnemy(true);
             if (target == null || target.GetComponent<Enemy>().dead)
             {
                 CheckNonAttackStates();

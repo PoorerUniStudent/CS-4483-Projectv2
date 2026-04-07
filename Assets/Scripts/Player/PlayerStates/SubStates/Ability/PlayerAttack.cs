@@ -7,7 +7,7 @@ public class PlayerAttack : PlayerAbility
 	private float enemyHitRadius = 0.3f;
 	private LayerMask whatIsEnemy;
 	
-	private float attackCooldown;
+	private float attackCooldown = 0.4f;
 	private float timeSinceLastAttack;
 	private float timeSinceAttackStart;
 
