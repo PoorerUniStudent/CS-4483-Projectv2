@@ -11,11 +11,13 @@ public class PlayerPull : PlayerAbility
 
     private float targetDistFromPlayer;
     private LineRenderer lineRenderer;
+    private LineRenderer slashLine;
 
     public PlayerPull(Player player, PlayerFiniteStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
         canPull = true;
         lineRenderer = player.lineRenderer;
+        slashLine = player.slashLineupLine;
     }
 
     public override void Enter()
@@ -36,6 +38,7 @@ public class PlayerPull : PlayerAbility
         if (lineRenderer != null)
         {
             lineRenderer.enabled = true;
+            slashLine.enabled = false;
         }
 
         if (targetRb == null)
