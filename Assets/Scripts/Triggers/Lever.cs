@@ -25,7 +25,13 @@ public class Lever : Interactable
         {
             Light2D light = activation.GetComponentInChildren<Light2D>(true);
             SpriteRenderer spriteRenderer = activation.GetComponent<SpriteRenderer>();
-            Debug.Log(activation);
+
+            if (activation.tag == "Toggleable")
+            {
+                MakeVisible(activation);
+                break;
+            }
+
             if (light)
             {
                 ChangeLightIntensity(light);
@@ -60,5 +66,10 @@ public class Lever : Interactable
         {
             spriteRenderer.color = Color.white;
         }   
+    }
+
+    public void MakeVisible(GameObject obj)
+    {
+        obj.SetActive(true);
     }
 }
