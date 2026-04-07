@@ -109,7 +109,7 @@ public class Player : MonoBehaviour
         slashLineupLine.enabled = false;
 
         // Auto load scene for now when you die
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Move to a SceneManager later
     }
 
     // For interactables
