@@ -84,7 +84,7 @@ public class PlayerInAir : PlayerState
         if (AttackInput && player.playerAttackState.CheckIfCanAttack())
         {
             Transform target = core.CollisionSenses.FindNearestEnemy(false);
-            if (target == null)
+            if (target == null || target.GetComponent<Enemy>().dead)
             {
                 CheckNonAttackStates();
                 return;
@@ -96,7 +96,7 @@ public class PlayerInAir : PlayerState
         else if (PullInput && player.playerPullState.CheckIfCanPull())
         {
             Transform target = core.CollisionSenses.FindNearestEnemy(true);
-            if (target == null)
+            if (target == null || target.GetComponent<Enemy>().dead)
             {
                 CheckNonAttackStates();
                 return;

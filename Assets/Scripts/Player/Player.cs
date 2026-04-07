@@ -35,12 +35,15 @@ public class Player : MonoBehaviour
     private bool DropInput;
     private Collider2D currentPlatform;
 
+    public LineRenderer lineRenderer { get; private set; }
+
     void Awake()
     {
         dead = false;
         core = GetComponentInChildren<Core>();
         anim = GetComponent<Animator>();
         col = GetComponent<Collider2D>();
+        lineRenderer = GetComponent<LineRenderer>();
         touchList = new List<GameObject>();
 
         stateMachine = new PlayerFiniteStateMachine();
@@ -77,7 +80,7 @@ public class Player : MonoBehaviour
 
         DropInput = playerInput.dropInput;
         currentPlatform = core.CollisionSenses.Platform;
-        Debug.Log(currentPlatform);
+
         if (DropInput && currentPlatform)
         {
             StartCoroutine(DisableCollision());
@@ -97,8 +100,12 @@ public class Player : MonoBehaviour
     {
         Debug.Log("PLayer ded");
         dead = true;
+        GetComponent<SpriteRenderer>().color = Color.red;
+        core.Movement.FreezePosition();
+
     }
 
+    // For interactables
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (!touchList.Contains(collision.gameObject))
@@ -106,7 +113,7 @@ public class Player : MonoBehaviour
             touchList.Add(collision.gameObject);
         }
     }
-
+    // For interactables
     private void OnTriggerExit2D(Collider2D collision)
     {
         if (touchList.Contains(collision.gameObject))

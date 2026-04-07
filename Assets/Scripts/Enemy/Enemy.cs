@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public class Enemy : MonoBehaviour
@@ -7,6 +8,7 @@ public class Enemy : MonoBehaviour
     [SerializeField] protected float walkSpeed;
     [SerializeField] protected float attackSpeed;
     [SerializeField] protected float attackRange;
+    [SerializeField] protected float attackRadius;
 
     [Header("Player Detection")]
     [SerializeField] protected float detectDistance;
@@ -29,9 +31,20 @@ public class Enemy : MonoBehaviour
 
     protected Core core;
 
+    protected Animator anim;
+    const string attackBoolName = "attack";
+    const string deadBoolName = "dead";
+
+    private bool pulled;
+    public bool dead { get; private set; }
+
+    [SerializeField] protected Transform attackPos;
+
     protected void Awake()
     {
         core = GetComponentInChildren<Core>();
+        anim = GetComponent<Animator>();
+
         canAttack = true;
         canWander = true;
     }
@@ -44,10 +57,21 @@ public class Enemy : MonoBehaviour
 
     protected void Update()
     {
+        if (dead)
+        {
+            core.Movement.SetVelocityZero();
+        }
+
+        if (pulled)
+        {
+            return;
+        }
+
+        core.LogicUpdate();
+
         if (!canAttack)
         {
             CheckIfCanAttack();
-            core.Movement.SetVelocityZero();
             return;
         }
 
@@ -90,7 +114,7 @@ public class Enemy : MonoBehaviour
         core.Movement.SetVelocityX(direction * walkSpeed);
         core.Movement.CheckIfShouldFlip(direction);
 
-        if (Vector2.Distance(transform.position, currentWanderPoint) < 0.1f)
+        if (Vector2.Distance(transform.position, currentWanderPoint) < 0.2f)
         {
             currentWanderPoint = currentWanderPoint == wanderPointA ? wanderPointB : wanderPointA;
             canWander = false;
@@ -129,8 +153,9 @@ public class Enemy : MonoBehaviour
     {
         canAttack = false; // Also pauses movement
         timeSinceLastAttack = Time.time;
-        Debug.Log("Attacking");
+        core.Movement.SetVelocityZero();
 
+        anim.SetBool(attackBoolName, true);
     }
 
     protected void CheckIfCanAttack()
@@ -139,5 +164,55 @@ public class Enemy : MonoBehaviour
         {
             canAttack = true;
         }
+    }
+
+    public virtual void OnAttackFinished()
+    {
+        anim.SetBool(attackBoolName, false);
+    }
+
+    public virtual void OnAttackTrigger()
+    {
+        if (dead)
+        {
+            return;
+        }
+
+        Collider2D col = Physics2D.OverlapCircle(transform.position, attackRadius, whatIsPlayer);
+
+        if (col != null)
+        {
+            col.GetComponent<Player>().Die();
+        }
+    }
+
+    public virtual void Die()
+    {
+        dead = true;
+        anim.SetBool(deadBoolName, true);
+        StartCoroutine(DeadCountdown());
+
+        GetComponent<SpriteRenderer>().color = Color.red;
+    }
+
+    IEnumerator DeadCountdown()
+    {
+        yield return new WaitForSeconds(0.3f);
+        Destroy(gameObject);
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.DrawWireSphere(attackPos.position, attackRadius);
+    }
+
+    public void SetPulledTrue()
+    {
+        pulled = true;
+    }
+
+    public void SetPulledFalse()
+    {
+        pulled = false;
     }
 }

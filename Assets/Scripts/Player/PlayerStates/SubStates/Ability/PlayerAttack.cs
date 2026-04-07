@@ -46,11 +46,13 @@ public class PlayerAttack : PlayerAbility
 	public override void Exit()
 	{
 		base.Exit();
-		
-		core.Movement.SetVelocityZero();
-		timeSinceLastAttack = Time.time;
+
+        float momentumCarry = 0.2f;
+        Vector2 currentVel = core.Movement.rb.linearVelocity;
+        core.Movement.SetVelocity(currentVel.magnitude * momentumCarry, currentVel.normalized);
+
+        timeSinceLastAttack = Time.time;
 		canAttack = true;
-		Debug.Log(289);
 	}
 
 	public override void LogicUpdate()
@@ -64,6 +66,7 @@ public class PlayerAttack : PlayerAbility
 		{
 			isAbilityDone = true;
 			// Unfreeze enemy
+			enemy.GetComponent<Enemy>().Die();
 		}
 	}
 

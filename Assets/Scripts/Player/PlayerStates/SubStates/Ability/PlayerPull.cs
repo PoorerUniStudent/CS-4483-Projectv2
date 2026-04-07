@@ -9,10 +9,12 @@ public class PlayerPull : PlayerAbility
     public bool canPull { get; private set; }
 
     private float targetDistFromPlayer;
+    private LineRenderer lineRenderer;
 
     public PlayerPull(Player player, PlayerFiniteStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
         canPull = true;
+        lineRenderer = player.lineRenderer;
     }
 
     public override void Enter()
@@ -30,6 +32,11 @@ public class PlayerPull : PlayerAbility
         // Enemy gets pulled towards player
         targetRb = target.GetComponent<Rigidbody2D>();
 
+        if (lineRenderer != null)
+        {
+            lineRenderer.enabled = true;
+        }
+
         if (targetRb == null)
         {
             isAbilityDone = true;
@@ -39,6 +46,8 @@ public class PlayerPull : PlayerAbility
         core.Movement.SetVelocityZero();
         core.Movement.FreezePosition();
         Vector2 pullDirection = ((Vector2) player.transform.position - targetRb.position).normalized;
+
+        target.GetComponent<Enemy>().SetPulledTrue();
         targetRb.linearVelocity = pullDirection * charData.pullForce;
         Debug.Log("Pulling");
     }
@@ -46,6 +55,11 @@ public class PlayerPull : PlayerAbility
     public override void Exit()
     {
         base.Exit();
+
+        if (lineRenderer != null)
+        {
+            lineRenderer.enabled = false;
+        }
 
         core.Movement.UnfreezePosition();
         timeSinceLastPull = Time.time;
@@ -58,11 +72,18 @@ public class PlayerPull : PlayerAbility
 
         targetDistFromPlayer = (target.position - player.transform.position).magnitude;
 
+        if (lineRenderer != null)
+        {
+            lineRenderer.SetPosition(0, player.transform.position);
+            lineRenderer.SetPosition(1, target.position);
+        }
+
         Vector2 pullDirection = ((Vector2)player.transform.position - targetRb.position).normalized;
         targetRb.linearVelocity = pullDirection * charData.pullForce;
 
         if (targetDistFromPlayer <= 0.5f) {
             targetRb.linearVelocity = Vector2.zero;
+            target.GetComponent<Enemy>().SetPulledFalse();
             isAbilityDone = true;
         }
     }
