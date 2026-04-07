@@ -28,7 +28,7 @@ public class Lever : Interactable
 
             if (activation.tag == "Toggleable")
             {
-                MakeVisible(activation);
+                ChangeVisiblity(activation);
                 break;
             }
 
@@ -68,8 +68,8 @@ public class Lever : Interactable
         }   
     }
 
-    public void MakeVisible(GameObject obj)
+    public void ChangeVisiblity(GameObject obj)
     {
-        obj.SetActive(true);
+        obj.SetActive(!obj.activeSelf);
     }
 }
