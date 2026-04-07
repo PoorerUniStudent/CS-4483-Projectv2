@@ -5,6 +5,7 @@ public class PlayerPull : PlayerAbility
     private Transform target;
     private Rigidbody2D targetRb;
     private float timeSinceLastPull;
+    private float timeSincePullStart;
     private float pullCooldown = 2f;
     public bool canPull { get; private set; }
 
@@ -50,6 +51,7 @@ public class PlayerPull : PlayerAbility
         target.GetComponent<Enemy>().SetPulledTrue();
         targetRb.linearVelocity = pullDirection * charData.pullForce;
         Debug.Log("Pulling");
+        timeSincePullStart = Time.time;
     }
 
     public override void Exit()
@@ -69,6 +71,12 @@ public class PlayerPull : PlayerAbility
     public override void LogicUpdate()
     {
         base.LogicUpdate();
+
+        // Just in case the enemy gets stuck
+        if (Time.time > timeSincePullStart + pullCooldown)
+        {
+            isAbilityDone = true;
+        }
 
         targetDistFromPlayer = (target.position - player.transform.position).magnitude;
 

@@ -9,6 +9,9 @@ public class PlayerAttack : PlayerAbility
 	
 	private float attackCooldown;
 	private float timeSinceLastAttack;
+	private float timeSinceAttackStart;
+
+	const float maxAttackTime = 2f;
 
 	public bool canAttack { get; private set; }
 
@@ -41,7 +44,10 @@ public class PlayerAttack : PlayerAbility
 
 		core.Movement.CheckIfShouldFlip(direction);
 		core.Movement.SetVelocity(charData.dashForce, distanceFromTarget);
-	}
+
+        timeSinceAttackStart = Time.time;
+
+    }
 
 	public override void Exit()
 	{
@@ -58,9 +64,13 @@ public class PlayerAttack : PlayerAbility
 	public override void LogicUpdate()
 	{
 		base.LogicUpdate();
+
+		if (Time.time >= timeSinceAttackStart + maxAttackTime)
+		{
+			isAbilityDone = true;
+		}
 		
 		Collider2D enemy = Physics2D.OverlapCircle(player.transform.position, enemyHitRadius, whatIsEnemy);
-
 		
 		if (enemy != null && enemy.transform == target)
 		{
