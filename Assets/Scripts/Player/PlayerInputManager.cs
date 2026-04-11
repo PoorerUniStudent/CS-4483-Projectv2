@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.InputSystem;
 
 public class PlayerInputManager : MonoBehaviour
@@ -12,6 +13,10 @@ public class PlayerInputManager : MonoBehaviour
     public bool interactInput { get; private set; }
     public bool pullInput { get; private set; }
     public bool dropInput {  get; private set; }
+
+    public UnityEvent onEscOpen, onEscClose;
+    private bool isPauseMenuOpen;
+
     private void Update()
     {
         CheckJumpInputHoldTime();
@@ -110,6 +115,23 @@ public class PlayerInputManager : MonoBehaviour
         if (context.canceled)
         {
             dropInput = false;
+        }
+    }
+
+    public void OnEscInput(InputAction.CallbackContext context)
+    {
+        if (context.started)
+        {
+            isPauseMenuOpen = !isPauseMenuOpen;
+
+            if (isPauseMenuOpen)
+            {
+                onEscOpen.Invoke();
+            }
+            else 
+            {
+                onEscClose.Invoke();
+            }
         }
     }
 }

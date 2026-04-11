@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using NUnit.Framework;
 using Unity.VisualScripting;
 using UnityEngine;
+using UnityEngine.Events;
 using UnityEngine.SceneManagement;
 
 public class Player : MonoBehaviour
@@ -38,6 +39,8 @@ public class Player : MonoBehaviour
 
     public LineRenderer lineRenderer { get; private set; }
     public LineRenderer slashLineupLine;
+
+    public UnityEvent onDeath;
 
     void Awake()
     {
@@ -109,7 +112,8 @@ public class Player : MonoBehaviour
         slashLineupLine.enabled = false;
 
         // Auto load scene for now when you die
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Move to a SceneManager later
+        onDeath.Invoke();
+        //SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Move to a SceneManager later
     }
 
     // For interactables
