@@ -8,6 +8,7 @@ public class PlayerAttack : PlayerAbility
 	private LayerMask whatIsEnemy;
 	
 	private float attackCooldown = 0.4f;
+	private float attackPauseTime = 0.2f;
 	private float timeSinceLastAttack;
 	private float timeSinceAttackStart;
 
@@ -33,18 +34,6 @@ public class PlayerAttack : PlayerAbility
 		}
 
         canAttack = false;
-        // Pause all actins the enemy is doing target.FreezeActions();
-        int direction = 1;
-		Vector2 distanceFromTarget = target.position - player.transform.position;
-		
-		if (distanceFromTarget.x < 0)
-		{
-			direction = -1;
-		}
-
-		core.Movement.CheckIfShouldFlip(direction);
-		core.Movement.SetVelocity(charData.dashForce, distanceFromTarget);
-
         timeSinceAttackStart = Time.time;
 
     }
@@ -65,7 +54,25 @@ public class PlayerAttack : PlayerAbility
 	{
 		base.LogicUpdate();
 
-		if (Time.time >= timeSinceAttackStart + maxAttackTime)
+		if (Time.time < timeSinceAttackStart + attackPauseTime)
+		{
+			core.Movement.SetVelocityZero();
+			return;
+        }
+
+        // Pause all actins the enemy is doing target.FreezeActions();
+        int direction = 1;
+        Vector2 distanceFromTarget = target.position - player.transform.position;
+
+        if (distanceFromTarget.x < 0)
+        {
+            direction = -1;
+        }
+
+        core.Movement.CheckIfShouldFlip(direction);
+        core.Movement.SetVelocity(charData.dashForce, distanceFromTarget);
+
+        if (Time.time >= timeSinceAttackStart + maxAttackTime)
 		{
 			isAbilityDone = true;
 		}
