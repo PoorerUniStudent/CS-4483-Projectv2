@@ -4,7 +4,8 @@ public class Projectile : MonoBehaviour
 {
     public float speed;
 
-    private int direction = 1;
+    private Vector2 direction;
+    private float angle;
     private float spawnTime;
     private float lifetime = 3.0f;
     private bool canDamage = true;
@@ -22,12 +23,14 @@ public class Projectile : MonoBehaviour
             Destroy(gameObject);
         }
 
-        rb.linearVelocity = new Vector2(speed * direction, 0);
+        rb.linearVelocity = speed * direction;
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
-    public void ChangeDirection(int direction)
+    public void ChangeDirection(Vector2 direction, float angle)
     {
         this.direction = direction;
+        this.angle = angle;
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
