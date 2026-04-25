@@ -8,6 +8,8 @@ public class GameManager : MonoBehaviour
     private static float bestStageTime;
 
     string STAGE_NAME = "";
+    string LAST_STAGE_NAME = "Stage 6";
+    string MAIN_MENU_NAME = "MainMenu";
 
     private void Awake()
     {
@@ -36,7 +38,7 @@ public class GameManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        if (sceneName != "MainMenu")
+        if (sceneName != MAIN_MENU_NAME || STAGE_NAME == LAST_STAGE_NAME)
         {
             if (bestStageTime == 0f || stageTime < bestStageTime)
             {

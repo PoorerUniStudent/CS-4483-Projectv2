@@ -20,7 +20,8 @@ public class MusicManager : MonoBehaviour
     {
         bgm.volume = 0.5f;
         bgm.pitch = 1.2f;
-        
+        bgm.volume = PlayerPrefs.GetFloat("musicVolume");
+
         if (!bgm.isPlaying)
         {
             bgm.Play();
@@ -29,7 +30,7 @@ public class MusicManager : MonoBehaviour
 
     private void OnSceneLoaded(Scene scene, LoadSceneMode mode)
     {
-        if (scene.name == sceneToDestroyOn)
+        if (scene.name == sceneToDestroyOn && gameObject != null)
         {
             Destroy(gameObject);
         }

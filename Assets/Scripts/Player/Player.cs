@@ -54,7 +54,7 @@ public class Player : MonoBehaviour
         stateMachine = new PlayerFiniteStateMachine();
         playerIdleState = new PlayerIdle(this, stateMachine, CharData, "idle");
         playerRunningState = new PlayerMoving(this, stateMachine, CharData, "run");
-        playerJumpingState = new PlayerJump(this, stateMachine, CharData, "jump");
+        playerJumpingState = new PlayerJump(this, stateMachine, CharData, "inAir");
         playerLandingState = new PlayerLanding(this, stateMachine, CharData, "landed");
         playerInAirState = new PlayerInAir(this, stateMachine, CharData, "inAir");
         playerAttackState = new PlayerAttack(this, stateMachine, CharData, "attack");
@@ -103,7 +103,6 @@ public class Player : MonoBehaviour
 
     public void Die()
     {
-        Debug.Log("PLayer ded");
         dead = true;
         GetComponent<SpriteRenderer>().color = Color.red;
         core.Movement.FreezePosition();
