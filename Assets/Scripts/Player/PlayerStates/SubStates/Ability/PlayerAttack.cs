@@ -16,6 +16,7 @@ public class PlayerAttack : PlayerAbility
 
 	public bool canAttack { get; private set; }
 	private bool canDisableCollision;
+	private bool attackTrigger;
 
 	public PlayerAttack(Player player, PlayerFiniteStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
@@ -48,14 +49,15 @@ public class PlayerAttack : PlayerAbility
         core.Movement.SetVelocity(currentVel.magnitude * momentumCarry, currentVel.normalized);
 
         timeSinceLastAttack = Time.time;
-		canAttack = true;
+		attackTrigger = false;
+        canAttack = true;
 	}
 
 	public override void LogicUpdate()
 	{
 		base.LogicUpdate();
 
-		if (Time.time < timeSinceAttackStart + attackPauseTime)
+		if (!attackTrigger)
 		{
 			core.Movement.SetVelocityZero();
 			return;
@@ -97,4 +99,11 @@ public class PlayerAttack : PlayerAbility
 	{
 		return canAttack && timeSinceLastAttack + attackCooldown <= Time.time;
 	}
+
+    public override void AnimationTrigger()
+    {
+        base.AnimationTrigger();
+
+		attackTrigger = true;
+    }
 }
