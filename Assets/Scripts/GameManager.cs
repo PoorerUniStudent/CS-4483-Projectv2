@@ -36,10 +36,12 @@ public class GameManager : MonoBehaviour
 
     public void LoadScene(string sceneName)
     {
-        Debug.Log(bestStageTime);
-        if (bestStageTime == 0f || stageTime < bestStageTime)
+        if (sceneName != "MainMenu")
         {
-            PlayerPrefs.SetFloat(STAGE_NAME, stageTime);
+            if (bestStageTime == 0f || stageTime < bestStageTime)
+            {
+                PlayerPrefs.SetFloat(STAGE_NAME, stageTime);
+            }
         }
 
         SceneManager.LoadScene(sceneName);
