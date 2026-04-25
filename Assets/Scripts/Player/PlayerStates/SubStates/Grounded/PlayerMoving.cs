@@ -26,4 +26,11 @@ public class PlayerMoving : PlayerGrounded
             }
         }
     }
+
+    public override void AnimationTrigger()
+    {
+        base.AnimationTrigger();
+
+        SFXManager.instance.PlaySFX(0);
+    }
 }

@@ -193,6 +193,7 @@ public class Enemy : MonoBehaviour
         StartCoroutine(DeadCountdown());
 
         GetComponent<SpriteRenderer>().color = Color.red;
+        SFXManager.instance.PlaySFX(4);
     }
 
     IEnumerator DeadCountdown()

@@ -87,6 +87,7 @@ public class PlayerAttack : PlayerAbility
 			isAbilityDone = true;
 			// Unfreeze enemy
 			enemy.GetComponent<Enemy>().Die();
+			SFXManager.instance.PlaySFX(2);
 		}
 	}
 

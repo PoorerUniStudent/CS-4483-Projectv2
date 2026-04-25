@@ -112,7 +112,7 @@ public class Player : MonoBehaviour
 
         // Auto load scene for now when you die
         onDeath.Invoke();
-        //SceneManager.LoadScene(SceneManager.GetActiveScene().name); // Move to a SceneManager later
+        SFXManager.instance.PlaySFX(4);
     }
 
     // For interactables

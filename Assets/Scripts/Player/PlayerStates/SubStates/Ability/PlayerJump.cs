@@ -16,6 +16,8 @@ public class PlayerJump : PlayerAbility
         isAbilityDone = true;
         jumpsLeft--;
         player.playerInAirState.SetIsJumping();
+
+        SFXManager.instance.PlaySFX(1);
     }
 
     public void ResetJumps() => jumpsLeft = charData.jumps;

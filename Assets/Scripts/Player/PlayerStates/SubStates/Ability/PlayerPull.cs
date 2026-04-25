@@ -56,6 +56,8 @@ public class PlayerPull : PlayerAbility
         Debug.Log("Pulling");
         timeSincePullStart = Time.time;
         target.GetComponent<Collider2D>().isTrigger = true;
+
+        SFXManager.instance.PlaySFX(3);
     }
 
     public override void Exit()
