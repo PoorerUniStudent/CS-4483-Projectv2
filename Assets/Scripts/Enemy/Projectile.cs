@@ -16,15 +16,19 @@ public class Projectile : MonoBehaviour
 
         rb = GetComponent<Rigidbody2D>();
     }
+
+    private void FixedUpdate()
+    {
+        rb.linearVelocity = speed * direction;
+        transform.rotation = Quaternion.Euler(0f, 0f, angle);
+    }
+
     void Update()
     {
         if (Time.time >= spawnTime + lifetime)
         {
             Destroy(gameObject);
         }
-
-        rb.linearVelocity = speed * direction;
-        transform.rotation = Quaternion.Euler(0f, 0f, angle);
     }
 
     public void ChangeDirection(Vector2 direction, float angle)
@@ -36,19 +40,26 @@ public class Projectile : MonoBehaviour
     private void OnTriggerEnter2D(Collider2D collision)
     {
         string tag = collision.tag;
-        if (tag == "Player" || tag == "Ground" || tag == "Wall")
+        int layerIndex = collision.gameObject.layer;
+        string layerName = LayerMask.LayerToName(layerIndex);
+
+        if (layerName == "Ground" || layerName == "Wall")
         {
             Destroy(gameObject);
+            return;
+        }
 
-            if (tag == "Player")
+        if (tag == "Player")
+        {
+            speed = 0f;
+            Player player = collision.GetComponent<Player>();
+
+            if (player != null)
             {
-                Player player = collision.GetComponent<Player>();
-
-                if (player != null)
-                {
-                    player.Die();
-                }
+                player.Die();
             }
+
+            Destroy(gameObject);
         }
     }
 }

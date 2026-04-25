@@ -1032,7 +1032,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 438b834941f6c664ea9684e4073ff945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: MainMenu
+  scene: Stage 6
 --- !u!212 &267775153
 SpriteRenderer:
   m_ObjectHideFlags: 0
@@ -1194,7 +1194,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackSpeed
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackRadius
@@ -1717,7 +1717,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackSpeed
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackRadius
@@ -2069,7 +2069,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackSpeed
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackRadius
@@ -2319,7 +2319,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackSpeed
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackRadius
@@ -5755,7 +5755,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackSpeed
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackRadius
@@ -7132,7 +7132,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackSpeed
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackRadius
@@ -7214,7 +7214,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackSpeed
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackRadius
@@ -7516,7 +7516,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackSpeed
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackRadius
@@ -9504,7 +9504,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackSpeed
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackRadius
@@ -10028,7 +10028,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackSpeed
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackRadius
@@ -10563,7 +10563,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackSpeed
-      value: 3
+      value: 2.5
       objectReference: {fileID: 0}
     - target: {fileID: 8478893715032327767, guid: 1d259700042d1ad40994668001060e7c, type: 3}
       propertyPath: attackRadius

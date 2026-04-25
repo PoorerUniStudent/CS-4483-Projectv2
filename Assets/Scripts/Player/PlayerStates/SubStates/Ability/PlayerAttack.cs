@@ -15,6 +15,7 @@ public class PlayerAttack : PlayerAbility
 	const float maxAttackTime = 2f;
 
 	public bool canAttack { get; private set; }
+	private bool canDisableCollision;
 
 	public PlayerAttack(Player player, PlayerFiniteStateMachine stateMachine, CharacterData charData, string animBoolName) : base(player, stateMachine, charData, animBoolName)
     {
@@ -35,7 +36,7 @@ public class PlayerAttack : PlayerAbility
 
         canAttack = false;
         timeSinceAttackStart = Time.time;
-
+		canDisableCollision = true;
     }
 
 	public override void Exit()
@@ -60,8 +61,8 @@ public class PlayerAttack : PlayerAbility
 			return;
         }
 
-        // Pause all actins the enemy is doing target.FreezeActions();
-        int direction = 1;
+			// Pause all actins the enemy is doing target.FreezeActions();
+			int direction = 1;
         Vector2 distanceFromTarget = target.position - player.transform.position;
 
         if (distanceFromTarget.x < 0)

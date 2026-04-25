@@ -114,7 +114,7 @@ public class Enemy : MonoBehaviour
         core.Movement.SetVelocityX(direction * walkSpeed);
         core.Movement.CheckIfShouldFlip(direction);
 
-        if (Mathf.Abs(distanceFromTarget.x) < 0.1f)
+        if (Mathf.Abs(distanceFromTarget.x) < 0.2f)
         {
             currentWanderPoint = currentWanderPoint == wanderPointA ? wanderPointB : wanderPointA;
             canWander = false;

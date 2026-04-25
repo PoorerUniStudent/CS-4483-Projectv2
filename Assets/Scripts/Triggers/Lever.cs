@@ -29,7 +29,15 @@ public class Lever : Interactable
             if (activation.tag == "Toggleable")
             {
                 ChangeVisiblity(activation);
-                break;
+
+                if (activationList.Count == 1)
+                {
+                    break;
+                }
+                else
+                {
+                    continue;
+                }
             }
 
             if (light)

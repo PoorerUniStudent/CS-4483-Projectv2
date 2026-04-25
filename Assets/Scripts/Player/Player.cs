@@ -135,6 +135,11 @@ public class Player : MonoBehaviour
 
     private IEnumerator DisableCollision()
     {
+        if (currentPlatform == null)
+        {
+            yield return null;
+        }
+
         Collider2D platformCollider = currentPlatform.GetComponent<Collider2D>();
 
         if (platformCollider == null)
@@ -150,5 +155,10 @@ public class Player : MonoBehaviour
 
         // Re-enable collision
         Physics2D.IgnoreCollision(col, platformCollider, false);
+    }
+
+    public void RemoteDisableCollision()
+    {
+        StartCoroutine(DisableCollision());
     }
 }
