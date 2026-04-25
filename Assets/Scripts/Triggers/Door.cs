@@ -10,7 +10,7 @@ public class Door : Interactable
 
         if (scene != null && !scene.Equals(""))
         {
-            SceneManager.LoadScene(scene);
+            GameManager.instance.LoadScene(scene);
         }
     }
 }

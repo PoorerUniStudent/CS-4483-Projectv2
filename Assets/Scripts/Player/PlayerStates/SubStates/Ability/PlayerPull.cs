@@ -55,6 +55,7 @@ public class PlayerPull : PlayerAbility
         targetRb.linearVelocity = pullDirection * charData.pullForce;
         Debug.Log("Pulling");
         timeSincePullStart = Time.time;
+        target.GetComponent<Collider2D>().isTrigger = true;
     }
 
     public override void Exit()
@@ -66,6 +67,7 @@ public class PlayerPull : PlayerAbility
             lineRenderer.enabled = false;
         }
 
+        target.GetComponent<Collider2D>().isTrigger = false;
         core.Movement.UnfreezePosition();
         timeSinceLastPull = Time.time;
         canPull = true;

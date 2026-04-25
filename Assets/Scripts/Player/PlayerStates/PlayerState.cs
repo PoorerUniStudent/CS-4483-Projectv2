@@ -36,8 +36,6 @@ public class PlayerState
         startTime = Time.time;
         isAnimationFinished = false;
         isExitingState = false;
-
-        Debug.Log(animBoolName);
     }
 
     public virtual void Exit()

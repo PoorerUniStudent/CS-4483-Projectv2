@@ -53,15 +53,15 @@ MonoBehaviour:
   health: 1
   walkSpeed: 3
   attackSpeed: 2
-  attackRange: 0
+  attackRange: 7
   attackRadius: 7
   detectDistance: 10
   whatIsPlayer:
     serializedVersion: 2
     m_Bits: 256
   wanderDistance: 0
-  wanderPointA: {x: 13, y: 0}
-  wanderPointB: {x: 2.5, y: 0}
+  wanderPointA: {x: 12, y: 0}
+  wanderPointB: {x: 18, y: 0}
   attackPos: {fileID: 2148870553959636357}
   proj: {fileID: 5392543553619861479, guid: 38e590ba272e25348aa952802ec50ce9, type: 3}
 --- !u!212 &3464453419488980931
