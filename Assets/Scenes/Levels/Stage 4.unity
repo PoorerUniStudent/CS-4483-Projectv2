@@ -2788,7 +2788,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 4318428384633476852, guid: 005ec215dbc4a294cadebd281b29cb76, type: 3}
-  m_Color: {r: 1, g: 0.16443026, b: 0, a: 1}
+  m_Color: {r: 0.06978583, g: 1, b: 0, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2992,7 +2992,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: -1
   m_Sprite: {fileID: 7482667652216324306, guid: 48e93eef0688c4a259cb0eddcd8661f7, type: 3}
-  m_Color: {r: 0.6037736, g: 0.10537558, b: 0.10537558, a: 1}
+  m_Color: {r: 0.155349, g: 0.6039216, b: 0.10588236, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -3698,7 +3698,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 438b834941f6c664ea9684e4073ff945, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  scene: MainMenu
+  scene: Stage 5
 --- !u!212 &899884669
 SpriteRenderer:
   m_ObjectHideFlags: 0
